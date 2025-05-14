@@ -112,7 +112,13 @@ class OrderViewSet(viewsets.ModelViewSet):
                 tickets__movie_session__movie__actors__id__in=actors_ids
             )
 
-        return queryset.distinct().select_related("user").prefetch_related("tickets__movie_session", "tickets__movie_session__cinema_hall", "tickets__movie_session__movie")
+        return queryset.distinct().select_related(
+            "user"
+        ).prefetch_related(
+            "tickets__movie_session",
+            "tickets__movie_session__cinema_hall",
+            "tickets__movie_session__movie"
+        )
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
